@@ -1,3 +1,4 @@
+import 'package:adopt_app/models/pet.dart';
 import 'package:adopt_app/providers/pets_provider.dart';
 import 'package:adopt_app/widgets/pet_card.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Pet> pets = Provider.of<PetsProvider>(context).pets;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Pet Adopt"),
@@ -33,19 +35,16 @@ class HomePage extends StatelessWidget {
               },
               child: const Text("GET"),
             ),
-            Consumer<PetsProvider>(
-              builder: (context, petsProvider, child) => GridView.builder(
-                  shrinkWrap: true,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height),
-                  ),
-                  physics: const NeverScrollableScrollPhysics(), // <- Here
-                  itemCount: petsProvider.pets.length,
-                  itemBuilder: (context, index) =>
-                      PetCard(pet: petsProvider.pets[index])),
-            )
+            GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height),
+                ),
+                physics: const NeverScrollableScrollPhysics(), // <- Here
+                itemCount: pets.length,
+                itemBuilder: (context, index) => PetCard(pet: pets[index])),
           ],
         ),
       ),
