@@ -7,15 +7,17 @@ class PetServices {
 
   Future<List<Pet>> getPets() async {
     List<Pet> pets = [];
-    try {
-      final getResponse = await dioClient
-              .get("https://coded-pets-api-crud.herokuapp.com/pets"),
-          pets = (getResponse.data as List)
-              .map((everyjasonofpet) => Pet.fromJson(everyjasonofpet))
-              .toList();
-    } on DioError catch (error) {
-      print(error);
-    }
+    // try {
+    Response getResponse =
+        await dioClient.get("https://coded-pets-api-crud.herokuapp.com/pets");
+    // pets = getResponse.data.map((pet) => Pet.fromJson(pet)).toList();
+
+    pets = (getResponse.data as List)
+        .map((everyjasonofpet) => Pet.fromJson(everyjasonofpet))
+        .toList();
+    // } on DioError catch (error) {
+    //   print(error);
+    // }
     return pets;
 // void getBooksFromService(){
 // PetServices().getPets();
